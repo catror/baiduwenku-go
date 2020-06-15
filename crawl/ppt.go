@@ -1,18 +1,20 @@
 package crawl
 
 import (
+	"github.com/gufeijun/baiduwenku/timer"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/gufeijun/baiduwenku/utils"
 )
 
 func StartPPTSpider(rawurl string) (string, error) {
 	//如果是vip免费文档直接调用第二种下载方式
-	if loction, ok := utils.PrePrecess(rawurl); ok {
+	if loction, ok := utils.PrePrecess(rawurl); ok&&loction!="" {
 		return loction, nil
 	}
 
@@ -69,9 +71,9 @@ func StartPPTSpider(rawurl string) (string, error) {
 			os.Remove(val)
 		}
 	}()
-
+	timer.Timetable[title + ".zip"] = time.Now()
 	//将图片打包为zip文件
-	return title + ".zip", nil
+	return "/download/?file="+title + ".zip", nil
 }
 
 //获取所有图片的url以及文件的名称

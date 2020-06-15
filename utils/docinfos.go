@@ -31,6 +31,9 @@ func GetDocType(url string) (string, error) {
 //获取文档的id
 func GetDocID(rawurl string) string {
 	res, _ := QuickRegexp(rawurl, `view/(.*?).html`)
+	if len(res)==0{
+		res,_=QuickRegexp(rawurl,`view/(.*?)\?`)
+	}
 	return res[0][1]
 }
 

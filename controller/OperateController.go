@@ -13,7 +13,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gufeijun/baiduwenku/crawl"
 	"github.com/gufeijun/baiduwenku/model"
-	"github.com/gufeijun/baiduwenku/timer"
 	"github.com/gufeijun/baiduwenku/utils"
 )
 
@@ -59,10 +58,6 @@ func HandleRequest(c *gin.Context) {
 	switch !model.CheckSession(c) {
 	case true:
 		filepath, err = normalDownload(url)
-		if !strings.Contains(filepath, `https://wkbjcloudbos.bdimg.com`) {
-			timer.Timetable[filepath] = time.Now()
-			filepath = "/download/?file=" + filepath
-		}
 	case false:
 		user, err1 := model.GetUserInfo(c)
 		if err1 != nil {
@@ -155,28 +150,22 @@ func advancedDownload(urls string, user *model.User) (filepath string, err error
 		return
 	}
 
-	//如果当前下载文档为专享文档
-	if ifprofession {
-		//获取vip专享文档剩余下载次数
-		remain, err := utils.GetDownloadTicket()
-		if err != nil {
-			return "", err
-		}
-
-		//普通用户下载vip专享文档受限
-		if user.PermissionCode == 0 {
-			return "", errors.New("您只有用券文档和共享文档的免费下载权限！")
-		}
-
-		if remain == 0 {
-			return "", errors.New("无剩余专享文档下载券！")
-		}
+	//如果当普通用户下载vip专享文档
+	if ifprofession&&user.PermissionCode == 0 {
+		return "", errors.New("无vip专享文档的下载权限，尝试登出后再下载吧！")
 	}
 
 	//获取文档的真实下载地址
 	location, err := utils.Getlocation(infos)
 	if err != nil {
-		return "", err
+		if err.Error()!=NO_MORE_TIKICTS{
+			return "", err
+		}
+		//无剩余共享文档下载券的话，则调用普通下载方式
+		location,err=normalDownload(urls)
+		if err!=nil{
+			return "",err
+		}
 	}
 
 	//普通用户下载完成后，今日剩余下载次数减一

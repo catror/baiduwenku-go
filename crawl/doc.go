@@ -1,21 +1,23 @@
 package crawl
 
 import (
+	"github.com/gufeijun/baiduwenku/timer"
 	"io/ioutil"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/gufeijun/baiduwenku/utils"
 )
 
 func StartDocSpider(rawurl string) (string, error) {
-	//ch用于存放文档数据url
-	ch := make(chan string, 10)
-
 	//如果是vip免费文档直接调用第二种下载方式
-	if loction, ok := utils.PrePrecess(rawurl); ok {
+	if loction, ok := utils.PrePrecess(rawurl); ok&&loction!="" {
 		return loction, nil
 	}
+
+	//ch用于存放文档数据url
+	ch := make(chan string, 10)
 
 	title, err := parseDocRawURL(rawurl, ch)
 	if err != nil {
@@ -70,7 +72,8 @@ func StartDocSpider(rawurl string) (string, error) {
 	if err := ioutil.WriteFile(title+".doc", []byte(str), 0666); err != nil {
 		return "", err
 	}
-	return title + ".doc", nil
+	timer.Timetable[title + ".doc"] = time.Now()
+	return "/download/?file="+title + ".doc", nil
 }
 
 func parseDocRawURL(rawurl string, ch chan<- string) (string, error) {

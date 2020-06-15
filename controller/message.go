@@ -25,6 +25,7 @@ const (
 	EMPTY_CODE       = "空验证码！"
 	ILLEGAL_PASSWORD = "密码不小于8位且不能有空格!"
 	WRONG_CODE       = "验证码错误!"
+	NO_MORE_TIKICTS	 = "共享文档券不足!"
 )
 
 //记录验证码信息

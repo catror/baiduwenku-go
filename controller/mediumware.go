@@ -89,10 +89,10 @@ func LimitTimeMediumware() gin.HandlerFunc {
 //日志记录使用情况
 func LogOutput(c *gin.Context) {
 	go func(remote string) {
-		f, _ := os.OpenFile("log.output", os.O_CREATE|os.O_APPEND, 0666)
-		defer f.Close()
+		f, _ := os.OpenFile("log.output", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
 		log.SetOutput(f)
 		log.SetPrefix("[用户]")
 		log.Printf("IP:  %s", remote)
+		f.Close()
 	}(c.Request.RemoteAddr)
 }

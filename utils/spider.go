@@ -69,6 +69,7 @@ func Getlocation(infos []string) (location string, err error) {
 		"storage":          {"1"},
 		"downloadToken":    {infos[2]},
 		"req_vip_free_doc": {"1"}, //共享文档应设为0
+		"useTicket" : {"1"},
 	}
 
 	req, err := http.NewRequest("POST", "https://wenku.baidu.com/user/submit/download", strings.NewReader(val.Encode()))
@@ -105,10 +106,9 @@ func Getlocation(infos []string) (location string, err error) {
 			return
 		}
 		resp.Body.Close()
-
 		location = resp.Header.Get("Location")
 		if location == "" {
-			return "", errors.New("下载出错，未知原因！")
+			return "",errors.New("共享文档券不足!")
 		}
 	}
 	return
