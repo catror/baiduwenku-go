@@ -1,12 +1,12 @@
 package controller
 
 import (
-	"net/http"
-	"strings"
-
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gufeijun/baiduwenku/config"
 	"github.com/gufeijun/baiduwenku/model"
+	"net/http"
+	"regexp"
 )
 
 //处理用户的注册表单
@@ -19,10 +19,12 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	//查看是否是华科邮箱，进而赋予不同的权限
-	//普通人权限为0，huster为1
-	emailTail := strings.Split(user.EmailAdd, "@")[1]
-	if emailTail == "hust.edu.cn" {
+	//根据给定的正则规则赋予不同的用户不同的权限
+	matched,err:= regexp.MatchString(config.SeverConfig.REGEXP,user.EmailAdd)
+	if err!=nil{
+		fmt.Println("正则规则无法解析：",err)
+	}
+	if matched {
 		user.PermissionCode = 1
 	}
 

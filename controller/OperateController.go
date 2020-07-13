@@ -151,20 +151,20 @@ func advancedDownload(urls string, user *model.User) (filepath string, err error
 	}
 
 	//如果当普通用户下载vip专享文档
-	if ifprofession&&user.PermissionCode == 0 {
+	if ifprofession && user.PermissionCode == 0 {
 		return "", errors.New("无vip专享文档的下载权限，尝试登出后再下载吧！")
 	}
 
 	//获取文档的真实下载地址
 	location, err := utils.Getlocation(infos)
 	if err != nil {
-		if err.Error()!=NO_MORE_TIKICTS{
+		if err.Error() != NO_MORE_TIKICTS {
 			return "", err
 		}
 		//无剩余共享文档下载券的话，则调用普通下载方式
-		location,err=normalDownload(urls)
-		if err!=nil{
-			return "",err
+		location, err = normalDownload(urls)
+		if err != nil {
+			return "", err
 		}
 	}
 

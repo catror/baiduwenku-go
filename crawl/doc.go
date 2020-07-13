@@ -12,7 +12,7 @@ import (
 
 func StartDocSpider(rawurl string) (string, error) {
 	//如果是vip免费文档直接调用第二种下载方式
-	if loction, ok := utils.PrePrecess(rawurl); ok&&loction!="" {
+	if loction, ok := utils.PrePrecess(rawurl); ok && loction != "" {
 		return loction, nil
 	}
 
@@ -72,8 +72,8 @@ func StartDocSpider(rawurl string) (string, error) {
 	if err := ioutil.WriteFile(title+".doc", []byte(str), 0666); err != nil {
 		return "", err
 	}
-	timer.Timetable[title + ".doc"] = time.Now()
-	return "/download/?file="+title + ".doc", nil
+	timer.Timetable[title+".doc"] = time.Now()
+	return "/download/?file=" + title + ".doc", nil
 }
 
 func parseDocRawURL(rawurl string, ch chan<- string) (string, error) {

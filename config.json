@@ -1,12 +1,13 @@
 {
-  "DB_NAME": "",
-  "DB_CONN":"",
+  "DB_NAME": "mysql",
+  "DB_CONN":"root:123456@tcp(mysql:3306)/wenkudb",
   "DOMAIN": "",
-  "LISTEN_ADDRESS":"",
-  "LISTEN_PORT": "",
+  "LISTEN_ADDRESS":"0.0.0.0",
+  "LISTEN_PORT": "9898",
   "IMAP_PORT": ,
   "IMAP_SERVER": "",
   "IMAP_EMAIL": "",
   "IMAP_PASSWORD": "",
-  "BDUSS": ""
+  "BDUSS": "",
+  "REGEXP": ".*@hust.edu.cn"
 }

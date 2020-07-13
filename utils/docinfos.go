@@ -29,12 +29,16 @@ func GetDocType(url string) (string, error) {
 }
 
 //获取文档的id
-func GetDocID(rawurl string) string {
-	res, _ := QuickRegexp(rawurl, `view/(.*?).html`)
-	if len(res)==0{
-		res,_=QuickRegexp(rawurl,`view/(.*?)\?`)
+func GetDocID(rawurl string) (string, error) {
+	doc, err := QuickSpider(rawurl)
+	if err != nil {
+		return "", err
 	}
-	return res[0][1]
+	res, err := QuickRegexp(doc, `'docId': '(.*?)',`)
+	if err != nil {
+		return "", err
+	}
+	return res[0][1], nil
 }
 
 //还剩多少专享文档下载券
@@ -87,11 +91,11 @@ func GetInfos(url string) (infos []string, ifprofession bool, err error) {
 	doc := string(buf)
 
 	//获取文档id
-	res, err := QuickRegexp(url, `view/(.*?).html`)
-	infos[0] = res[0][1]
+	res, err := QuickRegexp(doc, `'docId': '(.*?)',`)
 	if err != nil {
 		return
 	}
+	infos[0] = res[0][1]
 
 	//获取文档的类型
 	res, err = QuickRegexp(doc, `'docType': '(.*?)',`)
@@ -127,7 +131,7 @@ func GetInfos(url string) (infos []string, ifprofession bool, err error) {
 
 //IsVIPfreeDoc 判断该文档是否为vip免费文档
 func IsVIPfreeDoc(url string) (ok bool, err error) {
-	docID := GetDocID(url)
+	docID, _ := GetDocID(url)
 	url = "https://wenku.baidu.com/user/interface/getvipfreedoc?doc_id=" + docID
 	doc, err := QuickSpider(url)
 	if err != nil {

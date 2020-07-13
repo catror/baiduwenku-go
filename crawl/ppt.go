@@ -14,7 +14,7 @@ import (
 
 func StartPPTSpider(rawurl string) (string, error) {
 	//如果是vip免费文档直接调用第二种下载方式
-	if loction, ok := utils.PrePrecess(rawurl); ok&&loction!="" {
+	if loction, ok := utils.PrePrecess(rawurl); ok && loction != "" {
 		return loction, nil
 	}
 
@@ -71,9 +71,9 @@ func StartPPTSpider(rawurl string) (string, error) {
 			os.Remove(val)
 		}
 	}()
-	timer.Timetable[title + ".zip"] = time.Now()
+	timer.Timetable[title+".zip"] = time.Now()
 	//将图片打包为zip文件
-	return "/download/?file="+title + ".zip", nil
+	return "/download/?file=" + title + ".zip", nil
 }
 
 //获取所有图片的url以及文件的名称
@@ -94,7 +94,8 @@ func parsePPTRawURL(rawurl string, ch chan<- string) (string, error) {
 	//利用go程来得到多个图片的url，文章title先返回给父程
 	go func(ch chan<- string, rawurl string) {
 		defer close(ch)
-		infoURL := "https://wenku.baidu.com/browse/getbcsurl?doc_id=" + utils.GetDocID(rawurl) + "&pn=1&rn=99999&type=ppt"
+		docid, _ := utils.GetDocID(rawurl)
+		infoURL := "https://wenku.baidu.com/browse/getbcsurl?doc_id=" + docid + "&pn=1&rn=99999&type=ppt"
 		doc, err := utils.QuickSpider(infoURL)
 		if err != nil {
 			return

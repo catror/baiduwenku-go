@@ -26,11 +26,12 @@ type Config struct {
 	IMAP_EMAIL     string //IMAP服务器的邮箱
 	IMAP_PASSWORD  string //IMAP服务的授权码
 	BDUSS          string //百度文库vip账号的cookie
-	DOMAIN         string //自己服务器的域名
+	DOMAIN         string //自己服务器的域名或公网IP
+	REGEXP         string //正则匹配规则，符合该规则的邮箱有下载专享文档的权限
 }
 
 func init() {
-	f, err := os.Open("config.json")
+	f, err := os.Open("./config.json")
 	if err != nil {
 		panic("无法定位配置文件")
 	}
