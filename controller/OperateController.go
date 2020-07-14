@@ -54,9 +54,7 @@ func HandleRequest(c *gin.Context) {
 	}
 	//读取登录状态
 	//根据不同登录状态启用不同的下载函数
-	a:=model.CheckSession(c)
-	fmt.Println(a)
-	switch !a {
+	switch !model.CheckSession(c){
 	case true:
 		fmt.Println("test")
 		filepath, err = normalDownload(url)
