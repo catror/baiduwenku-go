@@ -13,7 +13,7 @@ func init() {
 }
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.Static("/static", "front-end")        //加载静态文件
 	router.LoadHTMLGlob("front-end/html/*.html") //加载网页模板

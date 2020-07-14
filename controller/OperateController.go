@@ -52,13 +52,16 @@ func HandleRequest(c *gin.Context) {
 		c.JSON(http.StatusOK, newErrMsg(FAILURE_POSTFORM))
 		return
 	}
-
 	//读取登录状态
 	//根据不同登录状态启用不同的下载函数
-	switch !model.CheckSession(c) {
+	a:=model.CheckSession(c)
+	fmt.Println(a)
+	switch !a {
 	case true:
+		fmt.Println("test")
 		filepath, err = normalDownload(url)
 	case false:
+		fmt.Println("fuck")
 		user, err1 := model.GetUserInfo(c)
 		if err1 != nil {
 			c.JSON(http.StatusOK, newErrMsg(err1.Error()))

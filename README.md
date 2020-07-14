@@ -16,7 +16,7 @@
 
 #### ①原生应用安装方式
 
-配置`config.json`
+配置`config.json`，以下参数均需自行设置：
 
 ```shell
 "DB_NAME": "",			//mysql数据库
@@ -34,9 +34,9 @@
 
 本地跑项目把`DOMIN`和`LISTEN_ADDRESS`都设为`127.0.0.1`即可。
 
-关于__IMAP__的配置，可参考[IMAP](https://service.mail.qq.com/cgi-bin/help?subtype=1&id=28&no=331)。
+关于`IMAP`的配置，可参考[IMAP](https://service.mail.qq.com/cgi-bin/help?subtype=1&id=28&no=331)。
 
-关于__`BDUSS`__cookie获取：
+关于`BDUSS`cookie获取：
 
 在浏览器中登录百度文库(必须是会员账号)，利用浏览器的开发者工具获取cookie。
 
@@ -108,6 +108,13 @@ chmod 755 start.sh
 
 ```shell
 docker stop wenku
+```
+
+删除所有用户数据：
+
+```shell
+#容器中mysql的数据是挂载在项目目录下的mysql文件夹中
+rm -rf ./mysql
 ```
 
 若更改了配置，为使配置生效都应该执行`./start.sh`。

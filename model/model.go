@@ -87,14 +87,14 @@ func sessionExisted(emailadd string) bool {
 //CheckSession 检查服务端是否保存客户端的session信息
 func CheckSession(c *gin.Context) bool {
 	cookie, err := c.Request.Cookie("sessionid")
-	if err != nil {
+	if err != nil || cookie==nil{
 		return false
 	}
 	sessionid := cookie.Value
 	query := "select userid from hustsessions where sessionid=?"
 	row := config.Db.QueryRow(query, sessionid)
 	var userid int
-	return row.Scan(&userid) != nil
+	return row.Scan(&userid) == nil
 }
 
 //GetUserInfo  获取用户信息
