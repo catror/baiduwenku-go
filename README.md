@@ -29,7 +29,7 @@
 "IMAP_EMAIL": "", 		//提供IMAP服务的具体邮箱
 "IMAP_PASSWORD": "", 		//提供IMAP服务邮箱的IMAP授权码
 "BDUSS": "",			// 一个vip账号的cookie
-"REGEXP":"" 			//正则匹配规则，符合该规则的邮箱有下载专享文档的权限，如.*@hust.edu.cn只允						   许智慧华中大邮箱,.*为允许所有邮箱。
+"REGEXP":"" 			//正则匹配规则，符合该规则的邮箱有下载专享文档的权限，如.*@hust.edu.cn只许智慧华中大邮箱,.*为允许所有邮箱。
 ```
 
 本地跑项目把`DOMIN`和`LISTEN_ADDRESS`都设为`127.0.0.1`即可。

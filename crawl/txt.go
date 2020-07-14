@@ -26,7 +26,7 @@ func StartTxtSpider(rawurl string) (string, error) {
 
 	//如果已经存在该文件，直接返回
 	if _, err := os.Stat(title + ".txt"); err == nil {
-		return title + ".txt", nil
+		return "/download/?file="+title + ".txt", nil
 	}
 
 	//对url发起http请求

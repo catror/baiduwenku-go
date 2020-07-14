@@ -31,7 +31,7 @@ func StartPPTSpider(rawurl string) (string, error) {
 
 	//如果已经存在该文件，直接返回
 	if _, err := os.Stat(title + ".zip"); err == nil {
-		return title + ".zip", nil
+		return "/download/?file="+title + ".zip", nil
 	}
 
 	//i用于记录有多少张图片

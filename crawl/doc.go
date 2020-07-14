@@ -25,7 +25,7 @@ func StartDocSpider(rawurl string) (string, error) {
 	}
 	//如果已经存在该文件，直接返回
 	if _, err := os.Stat(title + ".doc"); err == nil {
-		return title + ".doc", nil
+		return "/download/?file="+title + ".doc", nil
 	}
 
 	var str string
