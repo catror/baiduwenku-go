@@ -91,10 +91,10 @@ func CheckSession(c *gin.Context) bool {
 		return false
 	}
 	sessionid := cookie.Value
-	query := "select userid from hustsessions where sessionid=?"
+	query := "select emailadd from hustsessions where sessionid=?"
 	row := config.Db.QueryRow(query, sessionid)
-	var userid int
-	return row.Scan(&userid) == nil
+	var emailadd string
+	return row.Scan(&emailadd) == nil
 }
 
 //GetUserInfo  获取用户信息

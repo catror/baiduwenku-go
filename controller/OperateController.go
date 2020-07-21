@@ -56,10 +56,8 @@ func HandleRequest(c *gin.Context) {
 	//根据不同登录状态启用不同的下载函数
 	switch !model.CheckSession(c){
 	case true:
-		fmt.Println("test")
 		filepath, err = normalDownload(url)
 	case false:
-		fmt.Println("fuck")
 		user, err1 := model.GetUserInfo(c)
 		if err1 != nil {
 			c.JSON(http.StatusOK, newErrMsg(err1.Error()))
