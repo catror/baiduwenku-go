@@ -23,7 +23,8 @@ func GetDocType(url string) (string, error) {
 	}
 	res, err := QuickRegexp(doc, `'docType': '(.*?)',`)
 	if err != nil {
-		return "", err
+		//return "", err
+		return "ppt",nil
 	}
 	return res[0][1], nil
 }

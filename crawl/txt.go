@@ -53,7 +53,7 @@ func extract(str string) (e string, err error) {
 	reg := regexp.MustCompile(`"c":"(.*?)"`)
 	res := reg.FindAllStringSubmatch(str, -1)
 	if len(res) == 0 {
-		return "", errors.New("No Submatch")
+		return "", errors.New("No Match")
 	}
 	for _, val := range res {
 		temps := strings.Split(val[1], "\\r\\n")

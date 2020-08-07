@@ -21,7 +21,7 @@ func QuickRegexp(raw string, patten string) ([][]string, error) {
 	reg := regexp.MustCompile(patten)
 	res := reg.FindAllStringSubmatch(raw, -1)
 	if len(res) == 0 {
-		return nil, errors.New("No Submatch")
+		return nil, errors.New("No Match")
 	}
 	return res, nil
 }
